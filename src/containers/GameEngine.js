@@ -29,8 +29,8 @@ const mapDispatchToProps = dispatch => {
         eraseInput: () => {
             dispatch(eraseInput())
         },
-        submitTrial: () => {
-            dispatch(submitTrial())
+        submitTrial: (trialTime) => {
+            dispatch(submitTrial(trialTime))
         },
         showFeedback: () => {
             dispatch(showFeedback())
@@ -100,7 +100,7 @@ class GameEngine extends Component {
     }
 
     levelFinished() {
-        return this.props.trials.length > this.props.totalTrials;
+        return this.props.trials.length + 1 === this.props.totalTrials;
     }
 
     onSubmit() {
@@ -110,13 +110,9 @@ class GameEngine extends Component {
             this.props.showFeedback();
             setTimeout(this.props.hideFeedback, this.props.feedback.duration);
 
-            this.props.submitTrial();
+            this.props.submitTrial(this.state.time);
             if (this.levelFinished()) {
-                if (this.props.feedback.visible) {
-                    this.props.hideFeedback();
-                }
-                this.props.finishLevel();
-                this.props.sendStoredTrials();
+                setTimeout(this.props.finishLevel, this.props.feedback.duration);
             } else {
                 this.createTrial();
             }
