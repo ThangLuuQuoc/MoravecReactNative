@@ -113,6 +113,7 @@ class GameEngine extends Component {
             this.props.submitTrial(this.state.time);
             if (this.levelFinished()) {
                 setTimeout(this.props.finishLevel, this.props.feedback.duration);
+                this.props.sendStoredTrials();
             } else {
                 this.createTrial();
             }

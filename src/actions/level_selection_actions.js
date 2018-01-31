@@ -11,11 +11,12 @@ export function receivePlayedLevelsInfo(levels) {
 
 export function getPlayedLevelsInfo() {
     return (dispatch) => {
-        AsyncStorage.getItem('@Moravec:levels').then((result) => {
+        AsyncStorage.getItem('@Moravec:levels').then((err, result) => {
+            let levels = {};
             if (result) {
-                const levels = JSON.parse(result);
-                dispatch(receivePlayedLevelsInfo(levels));
+                levels = JSON.parse(result);
             }
+            dispatch(receivePlayedLevelsInfo(levels));
         });
     }
 }
